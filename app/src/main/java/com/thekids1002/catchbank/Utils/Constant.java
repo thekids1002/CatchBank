@@ -1,6 +1,6 @@
 package com.thekids1002.catchbank.Utils;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Constant {
 
@@ -13,12 +13,13 @@ public class Constant {
         }
         return gI;
     }
-    public  ArrayList<String> listBankPackage;
+    // Danh sách các bank hỗ trợ
+    public HashMap<String,String> mapSupportBank;
 
     public Constant() {
-        this.listBankPackage = new ArrayList<>();
-        this.listBankPackage.add("com.VCB");
-        this.listBankPackage.add("mobile.acb.com.vn");
+        this.mapSupportBank = new HashMap<>();
+        this.mapSupportBank.put("com.VCB","VCB");
+        this.mapSupportBank.put("mobile.acb.com.vn","ACB");
     }
 
 
