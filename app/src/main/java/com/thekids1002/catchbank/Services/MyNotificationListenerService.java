@@ -3,6 +3,7 @@ package com.thekids1002.catchbank.Services;
 import android.app.Notification;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.thekids1002.catchbank.DTO.PostRequest;
@@ -14,6 +15,7 @@ import com.thekids1002.catchbank.Utils.Constant;
 import com.thekids1002.catchbank.Utils.HttpStatusCode;
 import com.thekids1002.catchbank.Utils.LogUtil;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,20 +40,28 @@ public class MyNotificationListenerService extends NotificationListenerService {
     }
 
     private void doPost(String notificationContent, PostRequest post) {
-        Call<PostResponse> call = APIClient.getClient().create(PostService.class).postBank(post);
-        call.enqueue(new Callback<PostResponse>() {
-            @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
-                    if(response.isSuccessful() && response.code() == HttpStatusCode.OK.getCode()){
-                        MainActivity.addNotificationToList(notificationContent);
-                    }
-            }
+       try{
+           Call<PostResponse> call = APIClient.getClient().create(PostService.class).postBank(post);
+           call.enqueue(new Callback<PostResponse>() {
+               @Override
+               public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                   if(response.isSuccessful() && response.code() == HttpStatusCode.OK.getCode()){
+                       MainActivity.addNotificationToList(notificationContent);
+                       Toast.makeText(MyNotificationListenerService.this,"OK",Toast.LENGTH_SHORT).show();
+                   }
+               }
 
-            @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
-                Toast.makeText(MyNotificationListenerService.this, "Đã có lỗi xảy ra", Toast.LENGTH_SHORT).show();
-            }
-        });
+               @Override
+               public void onFailure(Call<PostResponse> call, Throwable t) {
+                   Toast.makeText(MyNotificationListenerService.this, "Error" + t.getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           });
+       }
+       catch (Exception e){
+           e.printStackTrace();
+           LogUtil.LogDebug(e.getMessage());
+           Toast.makeText(MyNotificationListenerService.this,"Error" + e.getMessage(), Toast.LENGTH_SHORT);
+       }
     }
 
     @Override

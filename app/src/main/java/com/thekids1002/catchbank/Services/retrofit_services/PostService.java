@@ -7,6 +7,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.Call;
 public interface PostService {
-    @POST("")
+    @POST("api/v1/TEST/API/BANKING")
     Call<PostResponse> postBank(@Body PostRequest info);
 }

@@ -6,12 +6,12 @@ import com.google.gson.Gson;
 
 public class PostRequest {
     public String message;
-    public String namebank;
+    public String bankName;
 
 
     public PostRequest(String message, String namebank) {
         this.message = message;
-        this.namebank = namebank;
+        this.bankName = namebank;
     }
 
     @NonNull
