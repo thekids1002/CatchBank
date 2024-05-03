@@ -3,6 +3,7 @@ package com.thekids1002.catchbank.Services;
 import android.app.Notification;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.thekids1002.catchbank.DTO.PostRequest;
@@ -49,7 +50,7 @@ public class MyNotificationListenerService extends NotificationListenerService {
 
             @Override
             public void onFailure(Call<PostResponse> call, Throwable t) {
-                Toast.makeText(MyNotificationListenerService.this, "Đã có lỗi xảy ra", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyNotificationListenerService.this, "Error" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
