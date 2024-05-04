@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.thekids1002.catchbank.DTO.PostRequest;
 import com.thekids1002.catchbank.DTO.PostResponse;
 import com.thekids1002.catchbank.DTO.Vietcombank;
+import com.thekids1002.catchbank.Fragment.VCBFragment;
 import com.thekids1002.catchbank.MainActivity;
 import com.thekids1002.catchbank.Retrofit.APIClient;
 import com.thekids1002.catchbank.Services.retrofit_services.PostService;
@@ -59,12 +60,9 @@ public class MyNotificationListenerService extends NotificationListenerService {
                        if(post.bankName.equals("VCB")){
                            Vietcombank vcb = BankService.gI().getVietCombankEntity(post);
                            if(BankService.gI().insertVCB(vcb,that )){
-                               // đọc lại dữ liệu
-                               ArrayList<Vietcombank> list = BankService.gI().getAllVcbs(that);
-                               LogUtil.LogDebug("Danh sách các giao dịch");
-                               for(Vietcombank v : list){
-                                   LogUtil.LogDebug(v.toString());
-                               }
+                               VCBFragment.vcbList.clear();
+                               VCBFragment.vcbList.addAll(BankService.gI().getAllVcbs(that));
+                               VCBFragment.vcbAdapter.notifyDataSetChanged();
                            }
                        }
                    }

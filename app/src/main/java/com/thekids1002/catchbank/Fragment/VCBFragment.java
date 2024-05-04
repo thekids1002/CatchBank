@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class VCBFragment extends Fragment {
     private RecyclerView recyclerView;
-    private VCBAdapter vcbAdapter;
-    private ArrayList<Vietcombank> vcbList;
+    public static VCBAdapter vcbAdapter;
+    public static ArrayList<Vietcombank> vcbList;
 
     public TransactionVCBHelper helper;
     public VCBFragment() {

@@ -36,7 +36,7 @@ public class TransactionVCBHelper extends SQLiteHelper {
         ArrayList<Vietcombank> vcbList = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME  + " ORDER BY id DESC", null);
         if (cursor.moveToFirst()) {
             do {
                 Vietcombank vcb = new Vietcombank();
