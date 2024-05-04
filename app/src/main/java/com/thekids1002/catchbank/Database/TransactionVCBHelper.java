@@ -10,6 +10,7 @@ import com.thekids1002.catchbank.DTO.Vietcombank;
 import java.util.ArrayList;
 
 public class TransactionVCBHelper extends SQLiteHelper {
+
     public static final int TABLE_VERSION = 1;
     public static final String TABLE_NAME = "vcb";
 

@@ -4,14 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.thekids1002.catchbank.Fragment.ACBFragment;
+import com.thekids1002.catchbank.Fragment.SettingFragment;
+import com.thekids1002.catchbank.Fragment.VCBFragment;
 import com.thekids1002.catchbank.Permissions.Permission;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int VCB_FRAGMENT_ID = R.id.action_vcb;
+    private static final int ACB_FRAGMENT_ID = R.id.action_acb;
+    private static final int SETTINGS_FRAGMENT_ID = R.id.action_settings;
     private static ArrayList<String> notificationList;
     private static ArrayAdapter<String> adapter;
     Context that = this;
@@ -21,15 +30,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Permission.checkNotificationListenerPermission(that);
-        ListView listView = findViewById(R.id.listView);
-        notificationList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notificationList);
-        listView.setAdapter(adapter);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+        replaceFragment(new VCBFragment());
     }
 
-    public static void addNotificationToList(String notificationContent) {
-        // Thêm nội dung thông báo vào danh sách và cập nhật ListView
-        notificationList.add(notificationContent);
-        adapter.notifyDataSetChanged();
+
+    private boolean onNavigationItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == VCB_FRAGMENT_ID) {
+            replaceFragment(new VCBFragment());
+            return true;
+        } else if (itemId == ACB_FRAGMENT_ID) {
+            replaceFragment(new ACBFragment());
+            return true;
+        } else if (itemId == SETTINGS_FRAGMENT_ID) {
+            replaceFragment(new SettingFragment());
+            return true;
+        }
+        return false;
     }
+
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
+    }
+
+
+
 }
